@@ -1,0 +1,31 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+  <meta charset="utf-8"/>
+  <title>Todo App</title>
+</head>
+<body>
+  <h1>Minhas tarefas</h1>
+
+  <div th:if="${userName}">
+    <p>Olá, <span th:text="${userName}">User</span> — <a th:href="@{/logout}">Logout</a></p>
+    <form action="/tasks" method="post">
+      <input name="title" placeholder="Nova tarefa" required/>
+      <button type="submit">Adicionar</button>
+    </form>
+    <ul>
+      <li th:each="t : ${tasks}">
+        <span th:text="${t.title}">Tarefa</span>
+        <form th:action="@{|/tasks/${t.id}/delete|}" method="post" style="display:inline">
+          <button type="submit">Remover</button>
+        </form>
+      </li>
+    </ul>
+  </div>
+
+  <div th:if="${userName == null}">
+    <p>Você não está logado.</p>
+    <a th:href="@{/oauth2/authorization/github}">Entrar com GitHub</a>
+  </div>
+</body>
+</html>
