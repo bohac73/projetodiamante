@@ -6,6 +6,9 @@ spring:
     url: jdbc:postgresql://${DB_HOST:db}:${DB_PORT:5432}/${DB_NAME:todo}
     username: ${DB_USER:postgres}
     password: ${DB_PASS:postgres}
+    thymeleaf:
+      cache: false
+
   jpa:
     hibernate:
       ddl-auto: none

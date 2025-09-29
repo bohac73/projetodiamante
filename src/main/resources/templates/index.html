@@ -1,31 +1,40 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" lang="">
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
 <head>
-  <meta charset="utf-8"/>
-  <title>Todo App</title>
+    <meta charset="utf-8"/>
+    <title>Todo App</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
-  <h1>Minhas tarefas</h1>
+<div class="container">
+    <header>
+        <h1>📋 Minhas tarefas</h1>
+    </header>
 
-  <div th:if="${userName}">
-    <p>Olá, <span th:text="${userName}">User</span> — <a th:href="@{/logout}">Logout</a></p>
-    <form action="/tasks" method="post">
-      <input name="title" placeholder="Nova tarefa" required/>
-      <button type="submit">Adicionar</button>
-    </form>
-    <ul>
-      <li th:each="t : ${tasks}">
-        <span th:text="${t.title}">Tarefa</span>
-        <form th:action="@{|/tasks/${t.id}/delete|}" method="post" style="display:inline">
-          <button type="submit">Remover</button>
+    <div th:if="${userName}">
+        <p class="welcome">Olá, <span th:text="${userName}">User</span> —
+            <a class="logout" th:href="@{/logout}">Logout</a>
+        </p>
+
+        <form action="/tasks" method="post" class="task-form">
+            <input name="title" placeholder="Nova tarefa" required/>
+            <button type="submit">Adicionar</button>
         </form>
-      </li>
-    </ul>
-  </div>
 
-  <div th:if="${userName == null}">
-    <p>Você não está logado.</p>
-    <a th:href="@{/oauth2/authorization/github}">Entrar com GitHub</a>
-  </div>
+        <ul class="task-list">
+            <li th:each="t : ${tasks}">
+                <span th:text="${t.title}">Tarefa</span>
+                <form th:action="@{|/tasks/${t.id}/delete|}" method="post" class="delete-form">
+                    <button type="submit">Remover</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+
+    <div th:if="${userName == null}">
+        <p>Você não está logado.</p>
+        <a class="login-btn" th:href="@{/oauth2/authorization/github}">Entrar com GitHub</a>
+    </div>
+</div>
 </body>
 </html>
